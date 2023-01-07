@@ -14,7 +14,7 @@ and returns exchange value for SEK to INR. The application uses CRON scheduler t
 ```bash
 curl --request GET \
 --url 'https://api.apilayer.com/currency_data/convert?to=INR&from=SEK&amount=1' \
---header 'apikey: mPeEQPVuAtxVR2LFYXAlRclZtbGApyOh'
+--header 'apikey: lWHgvT1oGQVVxprbrVswsTroUUG2DYYj'
 ```
 
 ### Response
@@ -27,11 +27,10 @@ curl --request GET \
         "amount": 1
     },
     "info": {
-        "timestamp": 1673033643,
-        "rate": 7.815987
+        "timestamp": 1673116982,
+        "quote": 7.818749
     },
-    "date": "2023-01-06",
-    "result": 7.815987
+    "result": 7.818749
 }
 ```
 
