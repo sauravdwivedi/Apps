@@ -2,14 +2,11 @@
 
 from flask import Flask, render_template
 import datetime
-import logging
 from backend import Config, CurrencyConversionScheduler, CurrencyConversionAPI
 
 
 app: Flask = Flask(__name__, template_folder="templates")
 app.config.from_object(Config)
-
-logging.getLogger(__name__)
 
 
 @app.route("/")

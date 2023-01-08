@@ -54,3 +54,15 @@ $ flask run
 
 - http://127.0.0.1:5000/
 
+### GUI app
+
+```bash
+$ gh repo clone sauravdwivedi/Apps
+$ cd Apps && cd Python && cd Flask && cd currency_conversion
+$ brew install python-tk
+$ python3 -m venv currency_conv
+$ source currency_conv/bin/activate
+$ pip3 install -r requirements.txt
+$ source secrets
+$ python3 gui.py
+```

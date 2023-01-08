@@ -51,4 +51,5 @@ class CurrencyConversionScheduler(CronScheduler):
             logging.info(f"SEK to INR at {now}: {result.get('quote')}")
             self.result = result
         else:
+            logging.error("Error ocurred in API call!")
             return
