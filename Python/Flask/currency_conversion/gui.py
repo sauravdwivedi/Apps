@@ -109,6 +109,8 @@ class Controller:
             ] = f"at {datetime.datetime.fromtimestamp(self.model.schedule.result.get('timestamp'))}"
 
     def close_application(self):
+        self.model.schedule.disable()
+        logging.info(f"Closing application")
         raise SystemExit
 
 

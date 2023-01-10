@@ -31,6 +31,7 @@ class CronScheduler:
         # Setting new thread with timer and calling method action()
         self.thread_timer = threading.Timer(lag, self.start_action)
         # Starting thread with timer
+        logging.info(f"Starting timer thread for {self.__class__.__name__}")
         self.thread_timer.start()
         # End of thread, calling start() again for next_execution
 
@@ -40,6 +41,16 @@ class CronScheduler:
 
     def action(self) -> None:
         pass
+
+    def disable(self) -> None:
+        self.stop()
+
+    def stop(self) -> None:
+        try:
+            self.thread_timer.cancel()
+            del self.thread_timer
+        except AttributeError as e:
+            logging.warning("Timer did not exist %s", e)
 
 
 class CurrencyConversionScheduler(CronScheduler):
