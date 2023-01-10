@@ -1,10 +1,7 @@
 import requests
 import json
-import logging
-from backend import Config
+from backend import Config, logger
 from requests.exceptions import HTTPError
-
-logging.getLogger(__name__)
 
 
 class CurrencyConversionAPI:
@@ -17,7 +14,7 @@ class CurrencyConversionAPI:
         try:
             response: any = requests.request("GET", url, headers=headers, data=payload)
         except HTTPError as e:
-            logging.error("Error ocurred while API call %s", e)
+            logger.error("Error ocurred while API call %s", e)
             raise HTTPError("API call failed")
         except AttributeError as e:
             raise AttributeError

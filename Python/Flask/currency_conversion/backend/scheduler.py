@@ -1,11 +1,8 @@
 import datetime
 import croniter
 import threading
-import logging
 
-from backend import CurrencyConversionAPI
-
-logging.getLogger(__name__)
+from backend import CurrencyConversionAPI, logger
 
 
 class CronScheduler:
@@ -26,12 +23,12 @@ class CronScheduler:
         next_execution: any = itr.get_next(datetime.datetime)
         self.next_execution = next_execution
         lag: any = (next_execution - now).total_seconds()
-        logging.info(f"Starting {self.__class__.__name__}")
-        logging.info(f"Next execution: {next_execution}")
+        logger.info(f"Starting {self.__class__.__name__}")
+        logger.info(f"Next execution: {next_execution}")
         # Setting new thread with timer and calling method action()
         self.thread_timer = threading.Timer(lag, self.start_action)
         # Starting thread with timer
-        logging.info(f"Starting timer thread for {self.__class__.__name__}")
+        logger.info(f"Starting timer thread for {self.__class__.__name__}")
         self.thread_timer.start()
         # End of thread, calling start() again for next_execution
 
@@ -50,7 +47,9 @@ class CronScheduler:
             self.thread_timer.cancel()
             del self.thread_timer
         except AttributeError as e:
-            logging.warning("Timer did not exist %s", e)
+            logger.warning("Timer thread did not exist %s", e)
+        else:
+            logger.info(f"Cancelling timer thread for {self.__class__.__name__}")
 
 
 class CurrencyConversionScheduler(CronScheduler):
@@ -59,8 +58,8 @@ class CurrencyConversionScheduler(CronScheduler):
         if result.get("info"):
             result = result.get("info")
             now: any = datetime.datetime.now().strftime("%H:%M:%S %p")
-            logging.info(f"SEK to INR at {now}: {result.get('quote')}")
+            logger.info(f"SEK to INR at {now}: {result.get('quote')}")
             self.result = result
         else:
-            logging.error("Error ocurred in API call!")
+            logger.error("Error ocurred in API call!")
             return

@@ -15,3 +15,5 @@ logging.basicConfig(
 stderrLogger = logging.StreamHandler()
 stderrLogger.setFormatter(logging.Formatter(logging.BASIC_FORMAT))
 logging.getLogger().addHandler(stderrLogger)
+
+logger = logging.getLogger()
