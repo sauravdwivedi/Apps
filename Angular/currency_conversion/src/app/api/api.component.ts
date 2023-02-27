@@ -2,11 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from './api.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CurrenciesSchema } from './api.service';
-import { ViewChild } from '@angular/core';
-import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
-
-import { default as Annotation } from 'chartjs-plugin-annotation';
+import {
+    ApexAxisChartSeries,
+    ApexChart,
+    ApexTitleSubtitle,
+    ApexDataLabels,
+    ApexFill,
+    ApexMarkers,
+    ApexYAxis,
+    ApexXAxis,
+    ApexTooltip
+} from "ng-apexcharts";
 
 
 @Component({
@@ -25,9 +31,9 @@ export class ApiComponent implements OnInit {
         start: new FormControl<Date | null>(null),
         end: new FormControl<Date | null>(null),
     });
+    dataPoints: [number, number][] = [];
 
     constructor(private apiService: ApiService) {
-        Chart.register(Annotation);
     }
 
     ngOnInit() {
@@ -59,104 +65,92 @@ export class ApiComponent implements OnInit {
         )
             .subscribe(data => {
                 console.log(data);
-                let dataX: string[] = [];
-                let dataY: number[] = [];
+                this.dataPoints = [];
                 let rates = data.rates;
                 let dates = Object.keys(rates)
                 let values: { String: Number }[] = Object.values(rates)
                 for (let i = 0; i < values.length; i++) {
-                    dataY.push(Number(Object.values(values[i])[0]));
-                    dataX.push(new Date(dates[i]).toLocaleString('en-us', { month: 'short', day: 'numeric', year: 'numeric' }));
-                    this.lineChartData.datasets[0].data = dataY;
-                    this.lineChartData.labels = dataX;
-                    this.lineChartData.datasets[0].label = `${this.selectedCurrencyOne} to ${this.selectedCurrencyTwo} exchange rate historical data`
-                    this.chart?.update();
+                    this.dataPoints.push([new Date(dates[i]).getTime(), Number(Object.values(values[i])[0])]);
+                    this.initChartData();
                 }
             });
     }
 
     refresh() {
-        window.location.reload();
-        this.chart?.update();
+        this.initChartData();
+        // window.location.reload();
     }
 
-    public lineChartData: ChartConfiguration['data'] = {
-        datasets: [
-            {
-                data: [],
-                label: 'Currency exchange historical data',
-                backgroundColor: 'rgba(77,83,96,0.2)',
-                borderColor: 'rgba(77,83,96,1)',
-                pointBackgroundColor: 'rgba(77,83,96,1)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgba(77,83,96,1)',
-                fill: 'origin',
-            }
-        ],
-        labels: []
-    };
+    public series: ApexAxisChartSeries;
+    public chart: ApexChart;
+    public dataLabels: ApexDataLabels;
+    public markers: ApexMarkers;
+    public titleChart: ApexTitleSubtitle;
+    public fill: ApexFill;
+    public yaxis: ApexYAxis;
+    public xaxis: ApexXAxis;
+    public tooltip: ApexTooltip;
 
-    public lineChartOptions: ChartConfiguration['options'] = {
-        responsive: true,
-        maintainAspectRatio: true,
-        elements: {
-            line: {
-                tension: 0.5
-            }
-        },
-        scales: {
-            // We use this empty structure as a placeholder for dynamic theming.
-            y:
+    public initChartData(): void {
+        this.series = [
             {
-                position: 'left',
+                name: `${this.selectedCurrencyTwo}`,
+                data: this.dataPoints
+            }
+        ];
+        this.chart = {
+            type: "area",
+            stacked: false,
+            height: 350,
+            zoom: {
+                type: "x",
+                enabled: true,
+                autoScaleYaxis: true
             },
-            y1: {
-                position: 'right',
-                grid: {
-                    color: 'rgba(255,0,0,0.3)',
-                },
-                ticks: {
-                    color: 'red'
+            toolbar: {
+                autoSelected: "zoom"
+            }
+        };
+        this.dataLabels = {
+            enabled: false
+        };
+        this.markers = {
+            size: 0
+        };
+        this.titleChart = {
+            text: `${this.selectedCurrencyOne} to ${this.selectedCurrencyTwo} exchange rate historical data`,
+            align: "center"
+        };
+        this.fill = {
+            type: "gradient",
+            gradient: {
+                shadeIntensity: 1,
+                inverseColors: false,
+                opacityFrom: 0.5,
+                opacityTo: 0,
+                stops: [0, 90, 100]
+            }
+        };
+        this.yaxis = {
+            labels: {
+                formatter: function (val) {
+                    return (val).toFixed(2);
+                }
+            },
+            title: {
+                text: `${this.selectedCurrencyOne} to ${this.selectedCurrencyTwo} exchange rate`
+            }
+        };
+        this.xaxis = {
+            type: "datetime"
+        };
+        this.tooltip = {
+            shared: false,
+            y: {
+                formatter: function (val) {
+                    return (val).toFixed(2);
                 }
             }
-        },
-
-        plugins: {
-            legend: { display: true },
-            annotation: {
-                annotations: [
-                    {
-                        type: 'line',
-                        scaleID: 'x',
-                        value: 'Time',
-                        borderColor: 'orange',
-                        borderWidth: 2,
-                        label: {
-                            display: false,
-                            position: 'center',
-                            color: 'orange',
-                            content: 'LineAnno',
-                            font: {
-                                weight: 'bold'
-                            }
-                        }
-                    },
-                ],
-            }
-        }
-    };
-
-    public lineChartType: ChartType = 'line';
-
-    @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
-
-    // events
-    public chartClicked({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-        console.log(event, active);
-    }
-
-    public chartHovered({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-        console.log(event, active);
+        };
     }
 }

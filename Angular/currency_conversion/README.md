@@ -76,9 +76,8 @@ brew install node
 npm install axios
 npm install -g @angular/cli
 npm install @angular-devkit/build-angular
-npm install --save ng2-charts
-npm install --save chart.js
-npm install chartjs-plugin-annotation
+npm install apexcharts --save
+npm install ng-apexcharts --save
 ng add @angular/material
 ng serve
 ```

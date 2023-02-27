@@ -18,6 +18,7 @@ import { ApiComponent } from './api/api.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { NgChartsModule } from 'ng2-charts';
+import { NgApexchartsModule } from "ng-apexcharts";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { NgChartsModule } from 'ng2-charts';
     HttpClientModule,
     MatMenuModule,
     MatSelectModule,
-    NgChartsModule
+    NgChartsModule,
+    NgApexchartsModule,
   ],
   exports: [
     MatFormFieldModule,
