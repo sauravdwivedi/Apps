@@ -27,7 +27,7 @@
             <mat-label>Select a date range</mat-label>
             <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
                 <input matStartDate formControlName="start" placeholder="Start date">
-                <input matEndDate formControlName="end" placeholder="End date">
+                <input matEndDate formControlName="end" placeholder="End date" (dateInput)="getExchangeData()">
             </mat-date-range-input>
             <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -40,7 +40,6 @@
 </div>
 
 <div class="data-button-row">
-    <button mat-raised-button color="warn" (click)="getExchangeData()">fetch exchange data</button>
     <button mat-raised-button color="accent" (click)="refresh()">refresh</button>
 </div>
 <br><br>
