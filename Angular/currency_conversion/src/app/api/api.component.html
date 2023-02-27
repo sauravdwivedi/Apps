@@ -40,12 +40,13 @@
 </div>
 
 <div class="data-button-row">
-    <button mat-raised-button color="warn" (click)="getExchangeData()">get Exchange Data</button>
-    <button mat-raised-button color="accent" (click)="refresh()">Refresh</button>
+    <button mat-raised-button color="warn" (click)="getExchangeData()">fetch exchange data</button>
+    <button mat-raised-button color="accent" (click)="refresh()">refresh</button>
 </div>
 <br><br>
 
-<div>
-    <canvasjs-chart [options]="chartOptions" [styles]="{width: '50%', height:'360px'}"
-        (chartInstance)="getChartInstance($event)"></canvasjs-chart>
+<div style="display: block; width: 700px">
+
+    <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"
+        (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
 </div>

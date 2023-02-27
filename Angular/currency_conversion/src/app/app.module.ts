@@ -17,16 +17,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ApiComponent } from './api/api.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
-
-
-import * as CanvasJSAngularChart from '../assets/canvasjs.angular.component';
-var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
     AppComponent,
     ApiComponent,
-    CanvasJSChart
   ],
   imports: [
     BrowserModule,
@@ -46,11 +42,12 @@ var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
     HttpClientModule,
     MatMenuModule,
     MatSelectModule,
+    NgChartsModule
   ],
   exports: [
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule
+    MatDatepickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
