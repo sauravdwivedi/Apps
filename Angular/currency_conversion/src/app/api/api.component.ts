@@ -25,9 +25,6 @@ export class ApiComponent implements OnInit {
         start: new FormControl<Date | null>(null),
         end: new FormControl<Date | null>(null),
     });
-    dataPoints: DataPoint[] = [];
-    dataX: string[] = [];
-    dataY: number[] = [];
 
     constructor(private apiService: ApiService) {
         Chart.register(Annotation);
@@ -50,9 +47,9 @@ export class ApiComponent implements OnInit {
 
     getExchangeData() {
         let startDate: Date = this.range.value.start!;
-        startDate.setDate(startDate.getDate() + 1);
+        startDate.setHours(startDate.getHours() + 1);
         let endDate: Date = this.range.value.end!;
-        endDate.setDate(endDate.getDate() + 1);
+        endDate.setHours(endDate.getHours() + 1);
 
         this.apiService.getExchangeData(
             this.selectedCurrencyOne,
@@ -62,15 +59,16 @@ export class ApiComponent implements OnInit {
         )
             .subscribe(data => {
                 console.log(data);
+                let dataX: string[] = [];
+                let dataY: number[] = [];
                 let rates = data.rates;
                 let dates = Object.keys(rates)
                 let values: { String: Number }[] = Object.values(rates)
                 for (let i = 0; i < values.length; i++) {
-                    this.dataPoints.push({ x: new Date(dates[i]), y: Number(Object.values(values[i])[0]) });
-                    this.dataY.push(Number(Object.values(values[i])[0]));
-                    this.dataX.push(new Date(dates[i]).toLocaleString('en-us', { month: 'short', day: 'numeric', year: 'numeric' }));
-                    this.lineChartData.datasets[0].data = this.dataY;
-                    this.lineChartData.labels = this.dataX;
+                    dataY.push(Number(Object.values(values[i])[0]));
+                    dataX.push(new Date(dates[i]).toLocaleString('en-us', { month: 'short', day: 'numeric', year: 'numeric' }));
+                    this.lineChartData.datasets[0].data = dataY;
+                    this.lineChartData.labels = dataX;
                     this.lineChartData.datasets[0].label = `${this.selectedCurrencyOne} to ${this.selectedCurrencyTwo} exchange rate historical data`
                     this.chart?.update();
                 }
@@ -85,7 +83,7 @@ export class ApiComponent implements OnInit {
     public lineChartData: ChartConfiguration['data'] = {
         datasets: [
             {
-                data: this.dataY,
+                data: [],
                 label: 'Currency exchange historical data',
                 backgroundColor: 'rgba(77,83,96,0.2)',
                 borderColor: 'rgba(77,83,96,1)',
@@ -96,7 +94,7 @@ export class ApiComponent implements OnInit {
                 fill: 'origin',
             }
         ],
-        labels: this.dataX
+        labels: []
     };
 
     public lineChartOptions: ChartConfiguration['options'] = {
@@ -161,9 +159,4 @@ export class ApiComponent implements OnInit {
     public chartHovered({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
         console.log(event, active);
     }
-}
-
-type DataPoint = {
-    x: Date;
-    y: Number;
 }
