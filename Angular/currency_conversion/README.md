@@ -73,13 +73,9 @@ curl --request GET 'https://api.apilayer.com/exchangerates_data/timeseries?start
 gh repo clone sauravdwivedi/Apps
 cd Apps && cd Angular && cd currency_conversion
 brew install node
-npm install axios
 npm install -g @angular/cli
 npm install @angular-devkit/build-angular
-npm install apexcharts --save
-npm install ng-apexcharts --save
-ng add @angular/material
-ng serve
+ng serve --open
 ```
 
 ### Open in browser (and click refresh for making another conversion)
