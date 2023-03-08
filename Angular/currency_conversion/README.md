@@ -74,7 +74,7 @@ gh repo clone sauravdwivedi/Apps
 cd Apps && cd Angular && cd currency_conversion
 brew install node
 npm install -g @angular/cli
-npm install @angular-devkit/build-angular
+npm install
 ng serve --open
 ```
 

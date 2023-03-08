@@ -25,6 +25,7 @@ export class ApiComponent implements OnInit {
     title = 'Currency conversion historical data';
     selectedCurrencyOne: string = "SEK";
     selectedCurrencyTwo: string = "INR";
+    maxDate: Date;
     currenciesList = new CurrenciesSchema();
     currencies: string[] = ["SEK", "INR", "EUR"];
     range = new FormGroup({
@@ -38,6 +39,7 @@ export class ApiComponent implements OnInit {
 
     ngOnInit() {
         this.getCurrencies();
+        this.maxDate = new Date();
     }
 
     getCurrencies() {
