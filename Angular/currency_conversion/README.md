@@ -14,7 +14,7 @@ and returns exchange value for two chosen currencies from dropdown list for chos
 
 ### GET request 
 ```bash
-curl --request GET 'https://api.apilayer.com/currency_data/list' \                  
+curl --request GET 'https://api.apilayer.com/currency_data/list' \
 --header 'apikey: lWHgvT1oGQVVxprbrVswsTroUUG2DYYj'
 ```
 
