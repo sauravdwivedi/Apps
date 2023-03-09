@@ -14,7 +14,7 @@ and returns exchange value for two chosen currencies from dropdown list. Applica
 
 ### GET request 
 ```bash
-curl --request GET 'https://api.apilayer.com/currency_data/list' \                  
+curl --request GET 'https://api.apilayer.com/currency_data/list' \
 --header 'apikey: lWHgvT1oGQVVxprbrVswsTroUUG2DYYj'
 ```
 
@@ -63,12 +63,12 @@ curl --request GET \
 ## Execution
 
 ```bash
-$ gh repo clone sauravdwivedi/Apps
-$ cd Apps && cd Vue && cd currency_conversion
-$ brew install node
-$ npm install axios
-$ npm install moment
-$ npm run serve
+gh repo clone sauravdwivedi/Apps
+cd Apps && cd Vue && cd currency_conversion
+brew install node
+npm install axios
+npm install moment
+npm run serve
 ```
 
 ### Open in browser (and click refresh for up-to-date value)
