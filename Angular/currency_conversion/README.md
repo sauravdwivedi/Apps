@@ -1,6 +1,6 @@
 # Angular application to plot currency conversion historical data
 
-<img src=pic.PNG alt="Angular application image">
+<img src=pic.gif alt="Angular application image">
 
 ## Project description
 
