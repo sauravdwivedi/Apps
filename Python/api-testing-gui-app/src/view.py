@@ -30,7 +30,8 @@ class View:
         tk.Label(self.api_frame, text="payload").place(x=10, y=70)
         tk.Label(self.api_frame, text="token uri").place(x=520, y=10)
         tk.Label(self.api_frame, text="client-id").place(x=520, y=40)
-        tk.Label(self.api_frame, text="password").place(x=520, y=70)
+        tk.Label(self.api_frame, text="username").place(x=520, y=70)
+        tk.Label(self.api_frame, text="password").place(x=520, y=100)
         self._endpoint = tk.Entry(self.api_frame, width=40)
         self.method = tk.StringVar()
         self._method_one = tk.Checkbutton(
@@ -73,9 +74,10 @@ class View:
             offvalue="",
             command=self.method_changed,
         )
-        self._payload = tk.Text(self.api_frame, height=5, width=30, padx=2, pady=2)
+        self._payload = tk.Text(self.api_frame, height=15, width=40, padx=2, pady=2)
         self._token_uri = tk.Entry(self.api_frame)
         self._client_id = tk.Entry(self.api_frame)
+        self._username = tk.Entry(self.api_frame)
         self._password = tk.Entry(self.api_frame, show="*")
         self.submit = tk.Button(
             self.api_frame,
@@ -93,7 +95,8 @@ class View:
         self._payload.place(x=100, y=70)
         self._token_uri.place(x=600, y=10)
         self._client_id.place(x=600, y=40)
-        self._password.place(x=600, y=70)
+        self._username.place(x=600, y=70)
+        self._password.place(x=600, y=100)
         self.submit.place(x=600, y=180)
 
     def method_changed(self):
@@ -114,11 +117,12 @@ class View:
         payload = json.dumps(self._payload.get("1.0", "end-1c"))
         token_uri = self._token_uri.get()
         client_id = self._client_id.get()
+        username = self._username.get()
         password = self._password.get()
         print(f"Endpoint: {endpoint}\nMethod: {method}\nPayload: {payload}")
         try:
             response = self.controller.api_call(
-                endpoint, method, payload, token_uri, client_id, password
+                endpoint, method, payload, token_uri, client_id, username, password
             )
         except Exception:
             raise

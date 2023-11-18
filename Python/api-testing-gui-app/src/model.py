@@ -3,11 +3,19 @@ import requests
 
 class Model:
     def api_call(
-        self, endpoint, method, payload, token_uri, client_id, password, token=""
+        self,
+        endpoint,
+        method,
+        payload,
+        token_uri,
+        client_id,
+        username,
+        password,
+        token="",
     ):
         try:
-            if token_uri and client_id and password:
-                token = self.get_token(token_uri, client_id, password)
+            if token_uri and client_id and username and password:
+                token = self.get_token(token_uri, client_id, username, password)
                 if not self.token:
                     return {"Response": "Token not found"}
 
@@ -25,7 +33,7 @@ class Model:
         except Exception:
             raise
 
-    def get_token(self, token_uri, client_id, password):
+    def get_token(self, token_uri, client_id, username, password):
         try:
             token_response = requests.post(
                 token_uri,
