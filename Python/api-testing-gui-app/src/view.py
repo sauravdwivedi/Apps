@@ -14,6 +14,7 @@ class View:
         self.make_frames()
         self.make_first_view()
         self._method = ""
+        self._response = {}
 
     def make_frames(self):
         self.api_frame = tk.Frame(self.root, width=900, height=300, relief=tk.SUNKEN)
@@ -87,6 +88,7 @@ class View:
             bg="Red",
             command=self.api_call,
         )
+        self._result = tk.Text(self.response_frame, width=100)
         self._endpoint.place(x=90, y=10)
         self._method_one.place(x=90, y=40)
         self._method_two.place(x=150, y=40)
@@ -99,6 +101,7 @@ class View:
         self._username.place(x=600, y=70)
         self._password.place(x=600, y=100)
         self.submit.place(x=600, y=180)
+        self._result.place(x=50, y=0)
 
         # Populate default values from environment
         self._endpoint.insert(0, os.getenv("ENDPOINT"))
@@ -119,6 +122,7 @@ class View:
             self._method = "DELETE"
 
     def api_call(self):
+        self._result.delete("1.0", "end")
         endpoint = self._endpoint.get()
         method = self._method
         payload = json.dumps(self._payload.get("1.0", "end-1c"))
@@ -126,32 +130,25 @@ class View:
         client_id = self._client_id.get()
         username = self._username.get()
         password = self._password.get()
-        print(f"Endpoint: {endpoint}\nMethod: {method}\nPayload: {payload}")
+
         try:
-            response = self.controller.api_call(
+            self._response = self.controller.api_call(
                 endpoint, method, payload, token_uri, client_id, username, password
             )
-        except Exception:
-            raise
+        except Exception as e:
+            self._response = {e.code: e.description}
 
-        result = tk.Text(self.response_frame, width=100)
-        result.place(x=50, y=0)
-
-        if response == None:
-            result.insert(tk.END, "{'Response': 'No response'}")
-            result.config(state=tk.DISABLED)
+        if self._response == None:
             return
 
-        if type(response) != list:
-            response = [response]
+        if type(self._response) != list:
+            self._response = [self._response]
 
-        for item in response:
-            result.insert(tk.END, "{\n    ")
+        for item in self._response:
+            self._result.insert(tk.END, "{\n    ")
             for k in item:
-                result.insert(
+                self._result.insert(
                     tk.END, "{}: {}\n    ".format(json.dumps(k), json.dumps(item[k]))
                 )
-            result.delete("end-5c", "end")
-            result.insert(tk.END, "\n}\n")
-
-        result.config(state=tk.DISABLED)
+            self._result.delete("end-5c", "end")
+            self._result.insert(tk.END, "\n}\n")

@@ -1,5 +1,5 @@
 import requests
-from werkzeug.exceptions import Unauthorized
+from werkzeug.exceptions import Unauthorized, NotFound, BadRequest, InternalServerError
 
 
 class Model:
@@ -15,10 +15,11 @@ class Model:
         token="",
     ):
         try:
+            if not (endpoint and method):
+                raise BadRequest("Endpoint and/or method missing")
+
             if token_uri and client_id and username and password:
                 token = self.get_token(token_uri, client_id, username, password)
-                if not token:
-                    return {"Response": "Token not found"}
 
             headers = {
                 "Content-Type": "application/json",
@@ -26,10 +27,21 @@ class Model:
             }
 
             if method == "GET":
-                return requests.get(url=endpoint, data=payload, headers=headers).json()
+                response = requests.get(url=endpoint, data=payload, headers=headers)
 
             if method == "POST":
-                return requests.post(url=endpoint, data=payload, headers=headers).json()
+                response = requests.post(url=endpoint, data=payload, headers=headers)
+
+            if response.status_code == 404:
+                raise NotFound
+
+            if response.status_code == 401:
+                raise Unauthorized
+
+            if response.status_code == 500:
+                raise InternalServerError
+
+            return response.json()
 
         except Exception:
             raise
@@ -51,6 +63,6 @@ class Model:
                 print("Access token obtained")
                 return token_response.json()["access_token"]
             else:
-                raise Unauthorized("Access token not obtained")
+                raise Unauthorized("Error ocurred in obtaining access token")
         except Exception:
             raise
