@@ -32,6 +32,15 @@ class Model:
             if method == "POST":
                 response = requests.post(url=endpoint, data=payload, headers=headers)
 
+            if method == "PUT":
+                response = requests.put(url=endpoint, data=payload, headers=headers)
+
+            if method == "PATCH":
+                response = requests.patch(url=endpoint, data=payload, headers=headers)
+
+            if method == "DELETE":
+                response = requests.delete(url=endpoint, data=payload, headers=headers)
+
             if response.status_code == 404:
                 raise NotFound
 
