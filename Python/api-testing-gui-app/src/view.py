@@ -1,6 +1,7 @@
 from src.controller import Controller
 import tkinter as tk
 import json
+import os
 
 
 class View:
@@ -98,6 +99,11 @@ class View:
         self._username.place(x=600, y=70)
         self._password.place(x=600, y=100)
         self.submit.place(x=600, y=180)
+
+        # Populate default values from environment
+        self._token_uri.insert(0, os.getenv("TOKEN_URI"))
+        self._client_id.insert(0, os.getenv("CLIENT_ID"))
+        self._username.insert(0, os.getenv("USERNAME"))
 
     def method_changed(self):
         if self.method.get() == "GET":

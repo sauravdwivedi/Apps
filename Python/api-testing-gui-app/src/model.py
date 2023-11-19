@@ -1,4 +1,5 @@
 import requests
+from werkzeug.exceptions import Unauthorized
 
 
 class Model:
@@ -16,7 +17,7 @@ class Model:
         try:
             if token_uri and client_id and username and password:
                 token = self.get_token(token_uri, client_id, username, password)
-                if not self.token:
+                if not token:
                     return {"Response": "Token not found"}
 
             headers = {
@@ -37,18 +38,19 @@ class Model:
         try:
             token_response = requests.post(
                 token_uri,
-                headers={"Content-Type": "application/json"},
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
                 data={
-                    "grant_type": "client_credentials",
+                    "grant_type": "password",
                     "client_id": client_id,
-                    "client_secret": password,
+                    "username": username,
+                    "password": password,
                 },
             )
-
-            print(token_response.json())
 
             if token_response.status_code == 200:
                 print("Access token obtained")
                 return token_response.json()["access_token"]
+            else:
+                raise Unauthorized("Access token not obtained")
         except Exception:
             raise

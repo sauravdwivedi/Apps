@@ -11,5 +11,6 @@ python3 -m venv venv
 source venv/bin/activate
 brew install python-tk@3.9
 pip3 install -r requirements.txt
+source env.list
 python3 app.py
 ```
