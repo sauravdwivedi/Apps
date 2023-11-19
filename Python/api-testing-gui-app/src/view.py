@@ -33,7 +33,7 @@ class View:
         tk.Label(self.api_frame, text="client-id").place(x=520, y=40)
         tk.Label(self.api_frame, text="username").place(x=520, y=70)
         tk.Label(self.api_frame, text="password").place(x=520, y=100)
-        self._endpoint = tk.Entry(self.api_frame, width=40)
+        self._endpoint = tk.Entry(self.api_frame, width=45)
         self.method = tk.StringVar()
         self._method_one = tk.Checkbutton(
             self.api_frame,
@@ -101,6 +101,7 @@ class View:
         self.submit.place(x=600, y=180)
 
         # Populate default values from environment
+        self._endpoint.insert(0, os.getenv("ENDPOINT"))
         self._token_uri.insert(0, os.getenv("TOKEN_URI"))
         self._client_id.insert(0, os.getenv("CLIENT_ID"))
         self._username.insert(0, os.getenv("USERNAME"))
