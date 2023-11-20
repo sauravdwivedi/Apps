@@ -1,5 +1,5 @@
 import requests
-from werkzeug.exceptions import Unauthorized, NotFound, BadRequest, InternalServerError
+from werkzeug.exceptions import Unauthorized, BadRequest
 
 
 class Model:
