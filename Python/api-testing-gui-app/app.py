@@ -1,6 +1,14 @@
-from src import View
+from src import Model, View, Controller
 
-app = View(name="API-Testing-App")
+
+def start_app():
+    model = Model()
+    view = View("API-Testing-App")
+    controller = Controller(model, view)
+    view.set_controller(controller)
+    view.start_view()
+    view.root.mainloop()
+
 
 if __name__ == "__main__":
-    app.root.mainloop()
+    start_app()

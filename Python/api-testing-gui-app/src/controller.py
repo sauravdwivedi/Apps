@@ -1,18 +1,56 @@
-from src.model import Model
+import tkinter as tk
+import json
 
 
 class Controller:
-    def __init__(self) -> None:
-        self.model = Model()
+    def __init__(self, model, view) -> None:
+        self.model = model
+        self.view = view
 
-    def api_call(
-        self, endpoint, method, payload, token_uri, client_id, username, password
-    ):
+    def start_view(self):
+        self.view.make_frames()
+        self.view.make_first_view()
+
+    def api_call(self):
+        self.view._result.delete("1.0", "end")
+        endpoint = self.view._endpoint.get()
+        method = self.view._method
+        payload = self.view._payload.get("1.0", "end-1c")
+
+        if payload == "":
+            payload = {}
+        else:
+            payload = json.loads(payload)
+
+        token_uri = self.view._token_uri.get()
+        client_id = self.view._client_id.get()
+        username = self.view._username.get()
+        password = self.view._password.get()
+
         try:
-            result = self.model.api_call(
+            self._response = self.model.api_call(
                 endpoint, method, payload, token_uri, client_id, username, password
             )
-        except Exception:
-            raise
+        except Exception as e:
+            self._response = {e.code: e.description}
 
-        return result
+        if self._response in (None, {}):
+            self._response = {204: "No content"}
+
+        if type(self._response) != list:
+            self._response = [self._response]
+
+        self.display_response()
+
+    def display_response(self):
+        for item in self._response:
+            self.view._result.insert(tk.END, "{\n    ")
+
+            for k in item:
+                self.view._result.insert(
+                    tk.END,
+                    "{}: {},\n    ".format(json.dumps(k), json.dumps(item[k])),
+                )
+
+            self.view._result.delete("end-7c", "end")
+            self.view._result.insert(tk.END, "\n}\n")

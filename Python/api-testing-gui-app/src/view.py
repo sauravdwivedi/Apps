@@ -1,20 +1,19 @@
-from src.controller import Controller
 import tkinter as tk
-import json
 import os
 
 
 class View:
     def __init__(self, name):
-        self.controller = Controller()
         self.root = tk.Tk()
         self.root.title = name
         # self.root.geometry("900x600")
         self.name = name
-        self.make_frames()
-        self.make_first_view()
-        self._method = ""
-        self._response = {}
+
+    def set_controller(self, controller):
+        self.controller = controller
+
+    def start_view(self):
+        self.controller.start_view()
 
     def make_frames(self):
         self.api_frame = tk.Frame(self.root, width=900, height=300, relief=tk.SUNKEN)
@@ -113,45 +112,4 @@ class View:
         self._method = self.method.get()
 
     def api_call(self):
-        self._result.delete("1.0", "end")
-        endpoint = self._endpoint.get()
-        method = self._method
-        payload = self._payload.get("1.0", "end-1c")
-
-        if payload == "":
-            payload = {}
-        else:
-            payload = json.loads(payload)
-
-        token_uri = self._token_uri.get()
-        client_id = self._client_id.get()
-        username = self._username.get()
-        password = self._password.get()
-
-        try:
-            self._response = self.controller.api_call(
-                endpoint, method, payload, token_uri, client_id, username, password
-            )
-        except Exception as e:
-            self._response = {e.code: e.description}
-
-        if self._response in (None, {}):
-            self._response = {204: "No content"}
-
-        if type(self._response) != list:
-            self._response = [self._response]
-
-        self.display_response()
-
-    def display_response(self):
-        for item in self._response:
-            self._result.insert(tk.END, "{\n    ")
-
-            for k in item:
-                self._result.insert(
-                    tk.END,
-                    "{}: {},\n    ".format(json.dumps(k), json.dumps(item[k])),
-                )
-
-            self._result.delete("end-7c", "end")
-            self._result.insert(tk.END, "\n}\n")
+        self.controller.api_call()
