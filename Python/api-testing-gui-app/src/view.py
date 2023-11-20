@@ -135,8 +135,8 @@ class View:
         except Exception as e:
             self._response = {e.code: e.description}
 
-        if self._response == None:
-            return
+        if self._response in (None, {}):
+            self._response = {204: "No content"}
 
         if type(self._response) != list:
             self._response = [self._response]
@@ -148,4 +148,4 @@ class View:
                     tk.END, "{}: {},\n    ".format(json.dumps(k), json.dumps(item[k]))
                 )
             self._result.delete("end-7c", "end")
-            self._result.insert(tk.END, "\n}")
+            self._result.insert(tk.END, "\n}\n")
