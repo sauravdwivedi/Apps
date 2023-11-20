@@ -8,6 +8,7 @@ class View:
         self.root.title = name
         # self.root.geometry("900x600")
         self.name = name
+        self._method = ""
 
     def set_controller(self, controller):
         self.controller = controller
@@ -82,8 +83,8 @@ class View:
         self._password = tk.Entry(self.api_frame, show="*")
         self.submit = tk.Button(
             self.api_frame,
-            text="submit",
-            fg="Black",
+            text="send",
+            fg="Purple",
             bg="Red",
             command=self.api_call,
         )
