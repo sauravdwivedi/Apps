@@ -116,7 +116,13 @@ class View:
         self._result.delete("1.0", "end")
         endpoint = self._endpoint.get()
         method = self._method
-        payload = json.loads(self._payload.get("1.0", "end-1c"))
+        payload = self._payload.get("1.0", "end-1c")
+
+        if payload == "":
+            payload = {}
+        else:
+            payload = json.loads(payload)
+
         token_uri = self._token_uri.get()
         client_id = self._client_id.get()
         username = self._username.get()
