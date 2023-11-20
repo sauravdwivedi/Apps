@@ -141,11 +141,17 @@ class View:
         if type(self._response) != list:
             self._response = [self._response]
 
+        self.display_response()
+
+    def display_response(self):
         for item in self._response:
             self._result.insert(tk.END, "{\n    ")
+
             for k in item:
                 self._result.insert(
-                    tk.END, "{}: {},\n    ".format(json.dumps(k), json.dumps(item[k]))
+                    tk.END,
+                    "{}: {},\n    ".format(json.dumps(k), json.dumps(item[k])),
                 )
+
             self._result.delete("end-7c", "end")
             self._result.insert(tk.END, "\n}\n")
