@@ -104,10 +104,18 @@ class View:
         self._result.place(x=50, y=0)
 
         # Populate default values from environment
-        self._endpoint.insert(0, os.getenv("ENDPOINT"))
-        self._token_uri.insert(0, os.getenv("TOKEN_URI"))
-        self._client_id.insert(0, os.getenv("CLIENT_ID"))
-        self._username.insert(0, os.getenv("USERNAME"))
+        self._endpoint.insert(
+            0, os.getenv("ENDPOINT", "https://jsonplaceholder.typicode.com/todos")
+        )
+        self._token_uri.insert(
+            0,
+            os.getenv(
+                "TOKEN_URI",
+                "http://localhost:8080/realms/test/protocol/openid-connect/token",
+            ),
+        )
+        self._client_id.insert(0, os.getenv("CLIENT_ID", "api-testing-gui-app"))
+        self._username.insert(0, os.getenv("USERNAME", "sdwivedi"))
 
     def method_changed(self):
         self._method = self.method.get()
