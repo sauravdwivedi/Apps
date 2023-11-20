@@ -76,7 +76,7 @@ class View:
             offvalue="",
             command=self.method_changed,
         )
-        self._payload = tk.Text(self.api_frame, height=15, width=40, padx=2, pady=2)
+        self._payload = tk.Text(self.api_frame, height=15, width=55, padx=2, pady=2)
         self._token_uri = tk.Entry(self.api_frame)
         self._client_id = tk.Entry(self.api_frame)
         self._username = tk.Entry(self.api_frame)
