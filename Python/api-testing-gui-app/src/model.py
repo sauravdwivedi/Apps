@@ -41,15 +41,6 @@ class Model:
             if method == "DELETE":
                 response = requests.delete(url=endpoint, data=payload, headers=headers)
 
-            if response.status_code == 404:
-                raise NotFound
-
-            if response.status_code == 401:
-                raise Unauthorized
-
-            if response.status_code == 500:
-                raise InternalServerError
-
             return response.json()
 
         except Exception:

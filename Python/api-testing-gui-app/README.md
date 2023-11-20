@@ -2,7 +2,7 @@
 
 <img src=pic.PNG alt="Python tkinter application image">
 
-## Installation
+## Execution
 
 ```bash
 gh repo clone sauravdwivedi/Apps
@@ -13,4 +13,10 @@ brew install python-tk
 pip3 install -r requirements.txt
 source env.list
 python3 app.py
+```
+
+## Alias
+
+```bash
+alias apitest='source <path-to-directory>/env.list && python3 <path-to-directory>/app.py'
 ```
