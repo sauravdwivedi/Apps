@@ -110,22 +110,13 @@ class View:
         self._username.insert(0, os.getenv("USERNAME"))
 
     def method_changed(self):
-        if self.method.get() == "GET":
-            self._method = "GET"
-        if self.method.get() == "POST":
-            self._method = "POST"
-        if self.method.get() == "PUT":
-            self._method = "PUT"
-        if self.method.get() == "PATCH":
-            self._method = "PATCH"
-        if self.method.get() == "DELETE":
-            self._method = "DELETE"
+        self._method = self.method.get()
 
     def api_call(self):
         self._result.delete("1.0", "end")
         endpoint = self._endpoint.get()
         method = self._method
-        payload = json.dumps(self._payload.get("1.0", "end-1c"))
+        payload = json.loads(self._payload.get("1.0", "end-1c"))
         token_uri = self._token_uri.get()
         client_id = self._client_id.get()
         username = self._username.get()

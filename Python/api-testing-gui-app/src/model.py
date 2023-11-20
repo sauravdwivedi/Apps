@@ -27,19 +27,19 @@ class Model:
             }
 
             if method == "GET":
-                response = requests.get(url=endpoint, data=payload, headers=headers)
+                response = requests.get(url=endpoint, json=payload, headers=headers)
 
             if method == "POST":
-                response = requests.post(url=endpoint, data=payload, headers=headers)
+                response = requests.post(url=endpoint, json=payload, headers=headers)
 
             if method == "PUT":
-                response = requests.put(url=endpoint, data=payload, headers=headers)
+                response = requests.put(url=endpoint, json=payload, headers=headers)
 
             if method == "PATCH":
-                response = requests.patch(url=endpoint, data=payload, headers=headers)
+                response = requests.patch(url=endpoint, json=payload, headers=headers)
 
             if method == "DELETE":
-                response = requests.delete(url=endpoint, data=payload, headers=headers)
+                response = requests.delete(url=endpoint, json=payload, headers=headers)
 
             return response.json()
 
