@@ -145,7 +145,7 @@ class View:
             self._result.insert(tk.END, "{\n    ")
             for k in item:
                 self._result.insert(
-                    tk.END, "{}: {}\n    ".format(json.dumps(k), json.dumps(item[k]))
+                    tk.END, "{}: {},\n    ".format(json.dumps(k), json.dumps(item[k]))
                 )
-            self._result.delete("end-5c", "end")
-            self._result.insert(tk.END, "\n}\n")
+            self._result.delete("end-7c", "end")
+            self._result.insert(tk.END, "\n}")
