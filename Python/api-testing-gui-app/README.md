@@ -31,7 +31,7 @@ source env.list
 python3 app.py
 ```
 
-## Alias
+### Alias
 
 ```bash
 alias apitest='source <path-to-directory>/env.list && python3 <path-to-directory>/app.py'
