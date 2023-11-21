@@ -12,7 +12,7 @@ flowchart LR
     D --> |POST| E(OAuth 2.0 server)
     E --> |OK| D
     D --> |api call| F(endpoint)
-    F --> |OK| D
+    F --> |response| D
     D --> C
     C --> B
     B --> A
