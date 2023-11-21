@@ -2,6 +2,20 @@
 
 <img src=pic.PNG alt="Python tkinter application image">
 
+## Architecture
+
+```mermaid
+flowchart LR
+    A(client) --> B(view)
+    B --> C(controller)
+    C --> D(model)
+    D --> |POST| E(OAuth 2.0 server)
+    E --> |OK| D
+    D --> C
+    C --> B
+    B --> A
+```
+
 ## Execution
 
 ```bash
