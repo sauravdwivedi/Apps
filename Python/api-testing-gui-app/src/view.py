@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 import os
 
 
@@ -30,11 +31,14 @@ class View:
         tk.Label(self.api_frame, text="endpoint").place(x=10, y=10)
         tk.Label(self.api_frame, text="method").place(x=10, y=40)
         tk.Label(self.api_frame, text="payload").place(x=10, y=70)
-        tk.Label(self.api_frame, text="token uri").place(x=520, y=10)
-        tk.Label(self.api_frame, text="client-id").place(x=520, y=40)
-        tk.Label(self.api_frame, text="username").place(x=520, y=70)
-        tk.Label(self.api_frame, text="password").place(x=520, y=100)
-        self._endpoint = tk.Entry(self.api_frame, width=45)
+        tk.Label(self.api_frame, text="token uri").place(x=550, y=10)
+        tk.Label(self.api_frame, text="client-id").place(x=550, y=40)
+        tk.Label(self.api_frame, text="username").place(x=550, y=70)
+        tk.Label(self.api_frame, text="password").place(x=550, y=100)
+        self.endpoint_history = tk.StringVar()
+        self._endpoint = ttk.Combobox(
+            self.api_frame, width=45, textvariable=self.endpoint_history
+        )
         self.method = tk.StringVar()
         self._method_one = tk.Checkbutton(
             self.api_frame,
@@ -96,17 +100,24 @@ class View:
         self._method_four.place(x=280, y=40)
         self._method_five.place(x=360, y=40)
         self._payload.place(x=90, y=70)
-        self._token_uri.place(x=600, y=10)
-        self._client_id.place(x=600, y=40)
-        self._username.place(x=600, y=70)
-        self._password.place(x=600, y=100)
-        self.submit.place(x=600, y=180)
+        self._token_uri.place(x=630, y=10)
+        self._client_id.place(x=630, y=40)
+        self._username.place(x=630, y=70)
+        self._password.place(x=630, y=100)
+        self.submit.place(x=630, y=180)
         self._result.place(x=50, y=0)
 
         # Populate default values from environment
-        self._endpoint.insert(
-            0, os.getenv("ENDPOINT", "https://jsonplaceholder.typicode.com/todos")
-        )
+        with open("endpoints.txt", "a") as f:
+            f.write(
+                os.getenv("ENDPOINT", "https://jsonplaceholder.typicode.com/todos")
+                + ",\n"
+            )
+
+        with open("endpoints.txt") as f:
+            lines = [line.rstrip("\n,") for line in f.readlines()]
+            self._endpoint["values"] = sorted(tuple(set(lines)))
+
         self._token_uri.insert(
             0,
             os.getenv(
@@ -114,6 +125,8 @@ class View:
                 "http://localhost:8080/realms/test/protocol/openid-connect/token",
             ),
         )
+
+        self._endpoint.current(0)
         self._client_id.insert(0, os.getenv("CLIENT_ID", "api-testing-gui-app"))
         self._username.insert(0, os.getenv("USERNAME", "sdwivedi"))
 
