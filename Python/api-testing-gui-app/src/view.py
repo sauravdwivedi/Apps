@@ -108,14 +108,14 @@ class View:
         self._result.place(x=50, y=0)
 
         # Populate default values from environment
-        with open("endpoints.txt", "a") as f:
+        with open("./endpoints.txt", "a") as f:
             f.write(
                 os.getenv("ENDPOINT", "https://jsonplaceholder.typicode.com/todos")
-                + ",\n"
+                + "\n"
             )
 
-        with open("endpoints.txt") as f:
-            lines = [line.rstrip("\n,") for line in f.readlines()]
+        with open("./endpoints.txt") as f:
+            lines = [line.rstrip("\n") for line in f.readlines()]
             self._endpoint["values"] = sorted(tuple(set(lines)))
 
         self._token_uri.insert(

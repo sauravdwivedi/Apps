@@ -15,16 +15,16 @@ class Controller:
         self.view._result.delete("1.0", "end")
         endpoint = self.view._endpoint.get()
 
-        with open("endpoints.txt", "a") as f:
-            f.write(endpoint + ",\n")
+        with open("./endpoints.txt", "a") as f:
+            f.write(endpoint + "\n")
 
-        with open("endpoints.txt", "r") as f:
-            lines = [line.rstrip("\n,") for line in f.readlines()]
+        with open("./endpoints.txt", "r") as f:
+            lines = [line.rstrip("\n") for line in f.readlines()]
             self.view._endpoint["values"] = sorted(tuple(set(lines)))
 
-        with open("endpoints.txt", "w") as f:
+        with open("./endpoints.txt", "w") as f:
             for line in self.view._endpoint["values"]:
-                f.write(line + ",\n")
+                f.write(line + "\n")
 
         method = self.view._method
         payload = self.view._payload.get("1.0", "end-1c")
