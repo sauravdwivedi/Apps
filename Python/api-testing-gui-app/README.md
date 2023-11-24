@@ -34,5 +34,5 @@ python3 app.py
 ### Alias
 
 ```bash
-alias apitest='source <path-to-directory>/env.list && python3 <path-to-directory>/app.py'
+alias apitest='cd <path-to-directory> && source env.list && python3 app.py'
 ```
