@@ -15,11 +15,9 @@ class Controller:
         self.view._result.delete("1.0", "end")
         endpoint = self.view._endpoint.get()
 
-        with open("endpoints.txt", "a") as f:
-            f.write(endpoint + "\n")
-
         with open("endpoints.txt", "r") as f:
             lines = [line.rstrip("\n") for line in f.readlines()]
+            lines.append(endpoint)
             self.view._endpoint["values"] = sorted(tuple(set(lines)))
 
         with open("endpoints.txt", "w") as f:
