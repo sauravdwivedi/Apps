@@ -61,7 +61,7 @@ class Model:
             )
 
             if token_response.status_code == 200:
-                print(f"{datetime.now(): }Access token obtained")
+                print(f"{datetime.now()}: Access token obtained")
                 return token_response.json()["access_token"]
             else:
                 raise Unauthorized("Error ocurred in obtaining access token")

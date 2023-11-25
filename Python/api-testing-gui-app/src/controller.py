@@ -54,6 +54,15 @@ class Controller:
                 )
                 self.view.endpoint_history.set(endpoint)
 
+            if self.view._payload_key_five.get() != "":
+                endpoint += (
+                    "&"
+                    + self.view._payload_key_five.get()
+                    + "="
+                    + self.view._payload_value_five.get()
+                )
+                self.view.endpoint_history.set(endpoint)
+
         with open("endpoints.txt", "r") as f:
             lines = [line.rstrip("\n") for line in f.readlines()]
             lines.append(endpoint)

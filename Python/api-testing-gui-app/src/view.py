@@ -178,6 +178,10 @@ class View:
             self._payload_value_four = tk.Entry(self.api_frame)
             self._payload_key_four.place(x=90, y=220)
             self._payload_value_four.place(x=280, y=220)
+            self._payload_key_five = tk.Entry(self.api_frame)
+            self._payload_value_five = tk.Entry(self.api_frame)
+            self._payload_key_five.place(x=90, y=250)
+            self._payload_value_five.place(x=280, y=250)
 
     def api_call(self):
         self.controller.api_call()
