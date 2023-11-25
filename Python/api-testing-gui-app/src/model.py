@@ -1,5 +1,6 @@
 import requests
 from werkzeug.exceptions import Unauthorized, BadRequest
+from datetime import datetime
 
 
 class Model:
@@ -60,7 +61,7 @@ class Model:
             )
 
             if token_response.status_code == 200:
-                print("Access token obtained")
+                print(f"{datetime.now(): }Access token obtained")
                 return token_response.json()["access_token"]
             else:
                 raise Unauthorized("Error ocurred in obtaining access token")
