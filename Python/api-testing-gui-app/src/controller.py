@@ -42,8 +42,11 @@ class Controller:
                 endpoint, method, payload, token_uri, client_id, username, password
             )
         except Exception as e:
-            self.view._result.insert(tk.END, "An error occured...\n\n")
-            self._response = {e.code: e.description}
+            if "code" in dir(e):
+                self._response = {e.code: e.description}
+            else:
+                self._response = {500: "An error ocurred"}
+                print(e)
 
         if self._response in (None, {}):
             self._response = {204: "No content"}
