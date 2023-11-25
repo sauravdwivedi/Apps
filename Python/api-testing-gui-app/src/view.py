@@ -10,6 +10,7 @@ class View:
         # self.root.geometry("900x600")
         self.name = name
         self._method = ""
+        self._payload = None
 
     def set_controller(self, controller):
         self.controller = controller
@@ -80,7 +81,23 @@ class View:
             offvalue="",
             command=self.method_changed,
         )
-        self._payload = tk.Text(self.api_frame, height=15, width=55, padx=2, pady=2)
+        self.payload = tk.StringVar()
+        self._payload_one = tk.Checkbutton(
+            self.api_frame,
+            text="Query Params",
+            variable=self.payload,
+            onvalue="Query Params",
+            offvalue="",
+            command=self.payload_changed,
+        )
+        self._payload_two = tk.Checkbutton(
+            self.api_frame,
+            text="JSON",
+            variable=self.payload,
+            onvalue="JSON",
+            offvalue="",
+            command=self.payload_changed,
+        )
         self._token_uri = tk.Entry(self.api_frame)
         self._client_id = tk.Entry(self.api_frame)
         self._username = tk.Entry(self.api_frame)
@@ -99,7 +116,8 @@ class View:
         self._method_three.place(x=220, y=40)
         self._method_four.place(x=280, y=40)
         self._method_five.place(x=360, y=40)
-        self._payload.place(x=90, y=70)
+        self._payload_one.place(x=90, y=70)
+        self._payload_two.place(x=210, y=70)
         self._token_uri.place(x=630, y=10)
         self._client_id.place(x=630, y=40)
         self._username.place(x=630, y=70)
@@ -132,6 +150,34 @@ class View:
 
     def method_changed(self):
         self._method = self.method.get()
+
+    def payload_changed(self):
+        if self.payload.get() == "JSON":
+            self._payload = tk.Text(self.api_frame, height=15, width=55, padx=2, pady=2)
+            self._payload.place(x=90, y=100)
+
+        if self.payload.get() == "Query Params":
+            if self._payload is not None:
+                self._payload.destroy()
+
+            tk.Label(self.api_frame, text="key").place(x=90, y=100)
+            tk.Label(self.api_frame, text="value").place(x=280, y=100)
+            self._payload_key_one = tk.Entry(self.api_frame)
+            self._payload_value_one = tk.Entry(self.api_frame)
+            self._payload_key_one.place(x=90, y=130)
+            self._payload_value_one.place(x=280, y=130)
+            self._payload_key_two = tk.Entry(self.api_frame)
+            self._payload_value_two = tk.Entry(self.api_frame)
+            self._payload_key_two.place(x=90, y=160)
+            self._payload_value_two.place(x=280, y=160)
+            self._payload_key_three = tk.Entry(self.api_frame)
+            self._payload_value_three = tk.Entry(self.api_frame)
+            self._payload_key_three.place(x=90, y=190)
+            self._payload_value_three.place(x=280, y=190)
+            self._payload_key_four = tk.Entry(self.api_frame)
+            self._payload_value_four = tk.Entry(self.api_frame)
+            self._payload_key_four.place(x=90, y=220)
+            self._payload_value_four.place(x=280, y=220)
 
     def api_call(self):
         self.controller.api_call()

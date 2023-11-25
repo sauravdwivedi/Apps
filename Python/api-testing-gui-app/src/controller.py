@@ -15,6 +15,45 @@ class Controller:
         self.view._result.delete("1.0", "end")
         endpoint = self.view._endpoint.get()
 
+        if self.view.payload.get() == "Query Params":
+            payload = ""
+
+            if self.view._payload_key_one.get() != "":
+                endpoint += (
+                    "?"
+                    + self.view._payload_key_one.get()
+                    + "="
+                    + self.view._payload_value_one.get()
+                )
+                self.view.endpoint_history.set(endpoint)
+
+            if self.view._payload_key_two.get() != "":
+                endpoint += (
+                    "&"
+                    + self.view._payload_key_two.get()
+                    + "="
+                    + self.view._payload_value_two.get()
+                )
+                self.view.endpoint_history.set(endpoint)
+
+            if self.view._payload_key_three.get() != "":
+                endpoint += (
+                    "&"
+                    + self.view._payload_key_three.get()
+                    + "="
+                    + self.view._payload_value_three.get()
+                )
+                self.view.endpoint_history.set(endpoint)
+
+            if self.view._payload_key_four.get() != "":
+                endpoint += (
+                    "&"
+                    + self.view._payload_key_four.get()
+                    + "="
+                    + self.view._payload_value_four.get()
+                )
+                self.view.endpoint_history.set(endpoint)
+
         with open("endpoints.txt", "r") as f:
             lines = [line.rstrip("\n") for line in f.readlines()]
             lines.append(endpoint)
@@ -25,7 +64,9 @@ class Controller:
                 f.write(line + "\n")
 
         method = self.view._method
-        payload = self.view._payload.get("1.0", "end-1c")
+
+        if self.view.payload.get() == "JSON":
+            payload = self.view._payload.get("1.0", "end-1c")
 
         if payload == "":
             payload = {}
