@@ -45,8 +45,7 @@ class Controller:
             if "code" in dir(e):
                 self._response = {e.code: e.description}
             else:
-                self._response = {500: "An error ocurred"}
-                print(e)
+                self._response = {500: repr(e)}
 
         if self._response in (None, {}):
             self._response = {204: "No content"}
