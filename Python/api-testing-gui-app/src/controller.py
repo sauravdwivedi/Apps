@@ -14,10 +14,9 @@ class Controller:
     def api_call(self):
         self.view._result.delete("1.0", "end")
         endpoint = self.view._endpoint.get()
+        payload = ""
 
         if self.view.payload.get() == "Query Params":
-            payload = ""
-
             if self.view._payload_key_one.get() != "":
                 endpoint += (
                     "?"
