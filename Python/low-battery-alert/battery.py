@@ -5,21 +5,25 @@ import threading
 
 WAITING_TIME = 3
 MIN_CHARGE_PERCENT = 20
+MAX_CHARGE_PERCENT = 80
 
 
 def check_battery():
     while True:
-        if (
-            not psutil.sensors_battery().power_plugged
-            and psutil.sensors_battery().percent <= MIN_CHARGE_PERCENT
-        ):
-            trigger_alert()
-            time.sleep(WAITING_TIME)
+        if psutil.sensors_battery().power_plugged:
+            if psutil.sensors_battery().percent >= MAX_CHARGE_PERCENT:
+                print("Disconnect charger")
+                trigger_alert()
+                time.sleep(WAITING_TIME)
+        else:
+            if psutil.sensors_battery().percent <= MIN_CHARGE_PERCENT:
+                print("Connect charger")
+                trigger_alert()
+                time.sleep(WAITING_TIME)
 
 
 def trigger_alert():
     alerts.play_error()
-    print("Need to connect battery")
 
 
 if __name__ == "__main__":
