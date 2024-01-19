@@ -1,3 +1,5 @@
+# Python program to optimize charging and improve battery life
+
 ## Instalation
 
 ### Run manually
