@@ -1,5 +1,9 @@
 # Python program to optimize charging and improve battery life
 
+## Description
+
+Program triggers alarm when either battery reaches below 20% or when charger is connected and battery reaches 80% charge levels.
+
 ## Instalation
 
 ### Run manually
