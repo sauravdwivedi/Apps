@@ -1,25 +1,8 @@
 # Python program to optimize charging and improve battery life
 
-## Description
-
 Program triggers alarm when either battery reaches below 20% or when charger is connected and battery reaches 80% charge levels.
 
 ## Instalation
-
-### Run manually
-
-```bash
-python3 -m venv venv 
-source venv/bin/activate
-pip3 install -r requirements.txt
-python3 battery.py
-```
-
-Make alias
-
-```bash
-echo "alias battery='python3 path-to-battery.py'" >> ~/.zshrc
-```
 
 ### Run in the background as a service
 
@@ -56,4 +39,19 @@ Find the program
 
 ```bash
 System Settings > General > Login Items
+```
+
+### Run manually
+
+```bash
+python3 -m venv venv 
+source venv/bin/activate
+pip3 install -r requirements.txt
+python3 battery.py
+```
+
+Make alias
+
+```bash
+echo "alias battery='python3 path-to-battery.py'" >> ~/.zshrc
 ```
