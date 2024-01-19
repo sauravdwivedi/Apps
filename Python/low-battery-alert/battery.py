@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from mac_alerts import alerts
 import psutil
 import time
