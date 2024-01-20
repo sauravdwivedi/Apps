@@ -6,6 +6,15 @@ Program triggers alarm when either battery reaches below 20% or when charger is 
 
 ### Run in the background as a service
 
+Clone repository and install requirements
+
+```bash
+gh repo clone sauravdwivedi/Apps
+cd Apps && cd Python && cd low-battery-alert
+pip3 install -r requirements.txt
+cp battery.py ~/battery.py
+```
+
 Make ~/Library/LaunchAgents/battery.plist file with following content
 
 ```xml
@@ -44,6 +53,8 @@ System Settings > General > Login Items
 ### Run manually
 
 ```bash
+gh repo clone sauravdwivedi/Apps
+cd Apps && cd Python && cd low-battery-alert
 python3 -m venv venv 
 source venv/bin/activate
 pip3 install -r requirements.txt
