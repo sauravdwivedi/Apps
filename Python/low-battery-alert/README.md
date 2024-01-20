@@ -15,7 +15,13 @@ pip3 install -r requirements.txt
 cp battery.py ~/battery.py
 ```
 
-Make ~/Library/LaunchAgents/battery.plist file with following content
+Make ~/Library/LaunchAgents/battery.plist file
+
+```bash
+vi ~/Library/LaunchAgents/battery.plist
+```
+
+with following content
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
