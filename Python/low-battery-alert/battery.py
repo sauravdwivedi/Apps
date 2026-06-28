@@ -5,7 +5,7 @@ import time
 import threading
 import os
 
-WAITING_TIME = 3
+WAITING_TIME = 30
 MIN_CHARGE_PERCENT = 20
 MAX_CHARGE_PERCENT = 80
 
